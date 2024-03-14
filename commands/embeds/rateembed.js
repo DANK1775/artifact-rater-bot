@@ -39,6 +39,10 @@ async function rateEmbed(statsobj, message) {
       embed.setColor("#21ae1f");
     }
 
+    rates = 0;
+    suma = 0;
+    msg = '';
+
     return embed
 }
 
