@@ -1,0 +1,23 @@
+{
+  "name": "artifact-rater-bot",
+  "version": "1.0.0",
+  "description": "discord bot artifact-rater",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DANK1175/artifact-rater-bot.git"
+  },
+  "author": "DANK1775",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DANK1175/artifact-rater-bot/issues"
+  },
+  "homepage": "https://github.com/DANK1175/artifact-rater-bot#readme",
+  "dependencies": {
+    "discord.js": "^14.14.1",
+    "tesseract.js": "^5.0.5"
+  }
+}
