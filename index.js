@@ -36,4 +36,4 @@ client.on('messageCreate', async (message) => {
     }
 })
 
-client.login('MTIwODU3NjExOTcwODU5MDA5MQ.GTDwvK.sISTEiSOX3autEn1ABrn6zPP4Bf4vWoZIs4cfQ')
+client.login('UR TOKEN HERE')
