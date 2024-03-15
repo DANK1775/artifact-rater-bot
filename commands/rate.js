@@ -22,6 +22,8 @@ module.exports = {
                 await message.reply({ embeds: [notFound()] });
             }
         } catch (error) {
+            const { embedFatalError } = require('./embeds/errorEmbed')
+            await message.reply({embeds: [embedFatalError]})
             console.log(error)
         }
     }
