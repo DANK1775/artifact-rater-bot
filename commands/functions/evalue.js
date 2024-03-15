@@ -36,7 +36,6 @@ function evalue(stats) {
             case 'atq':
                 if (stats[key].includes('%')) {  // si es atq %
                     stat = parseFloat(stat.slice(0, -1))
-
                     cases.atqPorcentual.forEach(item => {
                         if (stat >= item.min && stat <= item.max) {
                             statporcentual(key, stat, i, item.min, item.max)
@@ -121,7 +120,12 @@ function evalue(stats) {
                 });
                 break;
             case 'recarga de energía':
-                stat = parseFloat(stat.slice(0, -1))
+                if(stats[key].includes('%')){ // el texto suele hacer el salto de linea en esta stat
+                    stat = parseFloat(stat.slice(0, -1))
+                } else {
+                    stat = parseFloat(stat)
+                }
+                
                 cases.recarga.forEach(item => {
                     if (stat >= item.min && stat <= item.max) {
                         statporcentual(key, stat, i, item.min, item.max)
