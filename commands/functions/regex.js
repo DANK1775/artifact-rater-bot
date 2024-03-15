@@ -17,13 +17,10 @@ function regex(texto) {
 
         if (match) {
             let valor = parseFloat(match[1]);
-            console.log(valor)
             // Añadir el símbolo "%" si la estadística tiene un porcentaje
             stats[estadistica] = match[0].includes('%') ? `${valor}%` : valor;
         }
     }
-
-    console.log(texto)
     
     return stats;
 }
