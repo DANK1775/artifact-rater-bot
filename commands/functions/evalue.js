@@ -1,7 +1,7 @@
 const { cases } = require('./cases')
 let rateStats = {}
 let i = 0
-
+let stat = 0
 function rate(valor, min, max) {
     return (((valor - min) / (max - min)) * 100).toFixed(1) + '%';
 }
@@ -19,122 +19,37 @@ function statplano(key, stat, i, min, max) {
     rateStats[key] = {
         porcentaje: rate(stat, min, max),
         incremnetos: i,
-        valor:  stat,
+        valor: stat,
         nombre: key
     }
 }
 
-
 function evalue(stats) {
     rateStats = {}
-    for (const key in stats) {
-        i = 0
-        let stat = stats[key]
-        stats[key] = stats[key].toString()
-
-        switch (key) {
-            case 'atq':
-                if (stats[key].includes('%')) {  // si es atq %
+    for (const keyStat in stats) {
+        stat = stats[keyStat]
+        for (const keyCase in cases) {
+            if (keyStat === keyCase) {
+                i = 0
+                if (typeof stats[keyStat] === 'string'  && stats[keyStat].includes('%')) {  // verifica si el valor es % o plano
                     stat = parseFloat(stat.slice(0, -1))
-                    cases.atqPorcentual.forEach(item => {
-                        if (stat >= item.min && stat <= item.max) {
-                            statporcentual(key, stat, i, item.min, item.max)
-                        }
-                        i++
-                    });
-                } else { // si es atq plano
-                    stat = parseInt(stat)
-                    cases.atqPlano.forEach(item => {
-                        if (stat >= item.min && stat <= item.max) {
-                            statplano(key, stat, i, item.min, item.max)
-                        }
-                        i++
-                    });
-                }
-                break;
-            case 'vida':
-                if (stats[key].includes('%')) {
-                    stat = parseFloat(stat.slice(0, -1))
-                    cases.hpPorcentual.forEach(item => {
-                        if (stat >= item.min && stat <= item.max) {
-                            statporcentual(key, stat, i, item.min, item.max)
+                    cases[keyCase].Porcentual.forEach(range => {
+                        if (stat >= range.min && stat <= range.max) {
+                            statporcentual(keyStat, stat, i, range.min, range.max)
                         }
                         i++
                     });
                 } else {
                     stat = parseInt(stat)
-                    cases.hpPlano.forEach(item => {
-                        if (stat >= item.min && stat <= item.max) {
-                            statplano(key, stat, i, item.min, item.max)
+                    cases[keyCase].Plano.forEach(range => {
+                        if (stat >= range.min && stat <= range.max) {
+                            statplano(keyStat, stat, i, range.min, range.max)
                         }
                         i++
-                    });
+                    })
                 }
-
-                break;
-            case 'def':
-                if (stats[key].includes('%')) {
-                    stat = parseFloat(stat.slice(0, -1))
-                    cases.defPorcentual.forEach(item => {
-                        if (stat >= item.min && stat <= item.max) {
-                            statporcentual(key, stat, i, item.min, item.max)
-                        }
-                        i++
-                    });
-                } else {
-                    stat = parseInt(stat)
-                    cases.defPlano.forEach(item => {
-                        if (stat >= item.min && stat <= item.max) {
-                            statplano(key, stat, i, item.min, item.max)
-                        }
-                        i++
-                    });
-                }
-
-                break;
-            case 'maestría elemental':
-                stat = parseInt(stat)
-                cases.em.forEach(item => {
-                    if (stat >= item.min && stat <= item.max) {
-                        statplano(key, stat, i, item.min, item.max)
-                    }
-                    i++
-                });
-                break;
-            case 'daño crit':
-                stat = parseFloat(stat.slice(0, -1))
-                cases.cDmg.forEach(item => {
-                    if (stat >= item.min && stat <= item.max) {
-                        statporcentual(key, stat, i, item.min, item.max)
-                    }
-                    i++
-                });
-                break;
-            case 'prob. crit':
-                stat = parseFloat(stat.slice(0, -1))
-                cases.cRate.forEach(item => {
-                    if (stat >= item.min && stat <= item.max) {
-                        statporcentual(key, stat, i, item.min, item.max)
-                    }
-                    i++
-                });
-                break;
-            case 'recarga de energía':
-                if(stats[key].includes('%')){ // el texto suele hacer el salto de linea en esta stat
-                    stat = parseFloat(stat.slice(0, -1))
-                } else {
-                    stat = parseFloat(stat)
-                }
-                
-                cases.recarga.forEach(item => {
-                    if (stat >= item.min && stat <= item.max) {
-                        statporcentual(key, stat, i, item.min, item.max)
-                    }
-                    i++
-                });
-                break;
+            }
         }
-
     }
     return rateStats
 }
