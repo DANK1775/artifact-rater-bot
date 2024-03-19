@@ -5,6 +5,7 @@ let emojiCount = 1
 let n = 0
 
 function nbar(n) {
+    n = n === 10 ? (n-1) : n = n
     emojiCount = 1
     emojiBar = ''
 
